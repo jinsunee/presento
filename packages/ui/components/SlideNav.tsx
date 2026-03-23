@@ -2,61 +2,50 @@ interface SlideNavProps {
   currentIndex: number;
   totalSlides: number;
   commentedSlides?: number[];
-  ttsSlide?: number;
   onPrev: () => void;
   onNext: () => void;
   onGoTo: (index: number) => void;
 }
 
-export function SlideNav({ currentIndex, totalSlides, commentedSlides = [], ttsSlide, onPrev, onNext, onGoTo }: SlideNavProps) {
+export function SlideNav({ currentIndex, totalSlides, commentedSlides = [], onPrev, onNext, onGoTo }: SlideNavProps) {
   return (
-    <div className="flex items-center gap-4 px-6 py-5 bg-white/[0.02] border-t border-white/[0.06]">
+    <div className="flex items-center gap-3 px-6 py-3 border-t border-gray-800 bg-gray-950">
+      {/* Prev button */}
       <button
         onClick={onPrev}
         disabled={currentIndex === 0}
-        className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] disabled:opacity-20 disabled:cursor-not-allowed transition-all duration-200 cursor-pointer"
-        aria-label="Previous slide"
+        className="px-3 py-1.5 rounded text-sm font-medium bg-gray-800 hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
       >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <polyline points="15 18 9 12 15 6"/>
-        </svg>
+        Prev
       </button>
 
-      <div className="flex-1 flex items-center justify-center gap-1.5 overflow-x-auto py-1">
-        {Array.from({ length: totalSlides }, (_, i) => {
-          const isViewing = i === currentIndex;
-          const isTtsPlaying = ttsSlide !== undefined && i === ttsSlide;
-
-          return (
-            <button
-              key={i}
-              onClick={() => onGoTo(i)}
-              className={`relative group flex-shrink-0 transition-all duration-200 cursor-pointer ${
-                isViewing
-                  ? "w-10 h-1.5 rounded-full bg-blue-500"
-                  : isTtsPlaying
-                  ? "w-8 h-1.5 rounded-full bg-blue-400/50 animate-pulse"
-                  : "w-6 h-1.5 rounded-full bg-white/[0.1] hover:bg-white/[0.2]"
-              }`}
-              aria-label={`Go to slide ${i + 1}`}
-            >
-              {commentedSlides.includes(i) && (
-                <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-amber-400 rounded-full" />
-              )}
-            </button>
-          );
-        })}
+      {/* Thumbnail minimap */}
+      <div className="flex-1 flex items-center gap-1.5 overflow-x-auto px-2">
+        {Array.from({ length: totalSlides }, (_, i) => (
+          <button
+            key={i}
+            onClick={() => onGoTo(i)}
+            className={`relative w-8 h-5 rounded-sm border transition-all flex-shrink-0 ${
+              i === currentIndex
+                ? "border-blue-500 bg-blue-500/20 scale-110"
+                : "border-gray-700 bg-gray-800/50 hover:border-gray-500"
+            }`}
+          >
+            {/* Comment indicator */}
+            {commentedSlides.includes(i) && (
+              <span className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-400 rounded-full" />
+            )}
+          </button>
+        ))}
       </div>
 
+      {/* Next button */}
       <button
         onClick={onNext}
         disabled={currentIndex === totalSlides - 1}
-        className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] disabled:opacity-20 disabled:cursor-not-allowed transition-all duration-200 cursor-pointer"
-        aria-label="Next slide"
+        className="px-3 py-1.5 rounded text-sm font-medium bg-gray-800 hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
       >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <polyline points="9 18 15 12 9 6"/>
-        </svg>
+        Next
       </button>
     </div>
   );

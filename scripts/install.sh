@@ -45,6 +45,6 @@ fi
 
 echo ""
 echo "Presento installed! Next steps:"
-echo "  1. In Claude Code: /plugin marketplace add ${REPO}"
+echo "  1. In Claude Code: /plugin marketplace add jinsunee/presento"
 echo "  2. In Claude Code: /plugin install presento@presento"
-echo "  3. Use /presentation in any conversation"
+echo "  3. Use /presentation or /speak in any conversation"

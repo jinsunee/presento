@@ -3,8 +3,8 @@
   "description": "Turn Claude Code responses into interactive slide presentations with TTS narration and feedback collection.",
   "version": "0.1.0",
   "author": {
-    "name": "jinsunee"
+    "name": "blueberryworks"
   },
-  "repository": "https://github.com/jinsunee/presento",
+  "repository": "https://github.com/blueberryworks/presento",
   "keywords": ["presentation", "tts", "slides", "voice", "feedback"]
 }

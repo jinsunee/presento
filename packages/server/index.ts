@@ -40,8 +40,7 @@ export async function startPresentoServer(options: ServerOptions): Promise<Serve
 
           // GET /api/slides - return presentation data
           if (url.pathname === "/api/slides") {
-            const openaiApiKey = process.env.OPENAI_API_KEY || "";
-            return Response.json({ presentation, origin, openaiApiKey });
+            return Response.json({ presentation, origin });
           }
 
           // POST /api/feedback - receive user feedback

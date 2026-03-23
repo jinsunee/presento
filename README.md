@@ -7,7 +7,6 @@ Turn Claude Code responses into interactive slide presentations with TTS narrati
 - **Slide View** — Long responses become digestible slides
 - **TTS Narration** — Listen like a real presentation (Web Speech API or OpenAI TTS)
 - **Interactive Feedback** — Pause, comment on slides, submit feedback
-- **Voice Feedback** — Hold M or click mic to leave voice comments (Whisper)
 - **Feedback Loop** — Comments go back to Claude for revision
 
 ## Install
@@ -15,13 +14,13 @@ Turn Claude Code responses into interactive slide presentations with TTS narrati
 ### 1. Install binary
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/jinsunee/presento/main/scripts/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/blueberryworks/presento/main/scripts/install.sh | sh
 ```
 
 ### 2. Add to Claude Code
 
 ```
-/plugin marketplace add jinsunee/presento
+/plugin marketplace add blueberryworks/presento
 /plugin install presento@presento
 ```
 
@@ -31,13 +30,9 @@ curl -fsSL https://raw.githubusercontent.com/jinsunee/presento/main/scripts/inst
 
 Converts the last Claude response into a slide presentation with TTS.
 
-### Keyboard Shortcuts
+### /speak
 
-| Key | Action |
-|-----|--------|
-| `Space` | Play / Stop |
-| `Arrow Left/Right` | Navigate slides (without stopping TTS) |
-| `M` (hold) | Voice feedback (push-to-talk) |
+Reads the last response aloud using text-to-speech.
 
 ## TTS Options
 
@@ -51,7 +46,7 @@ Converts the last Claude response into a slide presentation with TTS.
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `PRESENTO_BROWSER` | System default | Custom browser to open |
-| `OPENAI_API_KEY` | - | Enable OpenAI TTS + Whisper voice feedback |
+| `OPENAI_API_KEY` | - | Enable OpenAI TTS |
 
 ## Development
 

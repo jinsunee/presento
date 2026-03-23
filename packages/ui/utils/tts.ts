@@ -19,7 +19,7 @@ export class TTSPlayer {
   }
 
   private speakWebSpeech(text: string, onEnd?: () => void): void {
-    if (speechSynthesis.speaking) speechSynthesis.cancel();
+    speechSynthesis.cancel();
     this.utterance = new SpeechSynthesisUtterance(text);
     this.utterance.rate = this.settings.rate;
     if (this.settings.voice) {
@@ -101,20 +101,12 @@ export class TTSPlayer {
   stop(): void {
     this.isSpeaking = false;
     if (this.audioElement) {
-      this.audioElement.onended = null;
-      this.audioElement.onerror = null;
       this.audioElement.pause();
       this.audioElement.currentTime = 0;
       this.audioElement = null;
     }
-    if (this.utterance) {
-      this.utterance.onend = null;
-      this.utterance.onerror = null;
-      this.utterance = null;
-    }
-    if (speechSynthesis.speaking || speechSynthesis.pending) {
-      speechSynthesis.cancel();
-    }
+    speechSynthesis.cancel();
+    this.utterance = null;
   }
 
   get speaking(): boolean {
