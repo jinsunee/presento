@@ -1,7 +1,9 @@
 /**
  * Presento CLI for Claude Code
  *
- * Reads slide JSON from stdin, opens interactive presentation UI in browser.
+ * Usage:
+ *   presento <path-to-json>   — read from file
+ *   echo '{}' | presento      — read from stdin
  */
 
 import { startPresentoServer, handleServerReady } from "@presento/server";
@@ -10,13 +12,27 @@ import { startPresentoServer, handleServerReady } from "@presento/server";
 import html from "../dist/index.html" with { type: "text" };
 const htmlContent = html as unknown as string;
 
-const inputJson = await Bun.stdin.text();
+const args = process.argv.slice(2);
+let inputJson: string;
+
+if (args[0]) {
+  // File path provided as argument
+  const file = Bun.file(args[0]);
+  if (!(await file.exists())) {
+    console.error(`File not found: ${args[0]}`);
+    process.exit(1);
+  }
+  inputJson = await file.text();
+} else {
+  // Read from stdin
+  inputJson = await Bun.stdin.text();
+}
 
 let presentation;
 try {
   presentation = JSON.parse(inputJson);
 } catch {
-  console.error("Failed to parse presentation JSON from stdin");
+  console.error("Failed to parse presentation JSON");
   process.exit(1);
 }
 

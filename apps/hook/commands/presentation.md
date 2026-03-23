@@ -1,6 +1,6 @@
 ---
 description: Present the last response as an interactive slide presentation with TTS
-allowed-tools: Bash(presento:*)
+allowed-tools: Bash(presento:*), Write(/tmp/presento-input.json)
 ---
 
 ## Instructions
@@ -27,10 +27,9 @@ Guidelines for slide creation:
 - Use markdown formatting in content (headers, lists, code blocks, tables)
 - First slide = title/overview, last slide = summary/next steps
 
-Then save the JSON to a temp file and run presento. Use two separate commands:
-
-First: !`printf '%s' '<the JSON>' > /tmp/presento-input.json`
-Then: !`presento < /tmp/presento-input.json`
+Then:
+1. Write the JSON to `/tmp/presento-input.json` using the Write tool
+2. Run: !`presento /tmp/presento-input.json`
 
 ## Feedback
 
