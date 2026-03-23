@@ -1,0 +1,18 @@
+{
+  "name": "presento",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Turn Claude Code responses into slide presentations with TTS and interactive feedback",
+  "author": "jinsunee",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jinsunee/presento.git"
+  },
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "dev": "bun run --cwd apps/hook dev",
+    "build": "bun run --cwd apps/hook build",
+    "serve": "bun run --cwd apps/hook serve"
+  }
+}

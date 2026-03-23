@@ -1,0 +1,13 @@
+{
+  "name": "presento",
+  "owner": {
+    "name": "jinsunee"
+  },
+  "plugins": [
+    {
+      "name": "presento",
+      "source": "./apps/hook",
+      "description": "Turn Claude Code responses into interactive slide presentations with TTS narration and feedback collection."
+    }
+  ]
+}

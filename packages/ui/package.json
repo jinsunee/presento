@@ -1,0 +1,17 @@
+{
+  "name": "@presento/ui",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "main": "index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./components/*": "./components/*",
+    "./utils/*": "./utils/*",
+    "./types": "./types.ts"
+  },
+  "dependencies": {
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
+  }
+}
