@@ -3,36 +3,41 @@ description: Present the last response as an interactive slide presentation with
 allowed-tools: Bash(presento:*), Write(/tmp/presento-input.json)
 ---
 
-## Instructions
+You are a presentation generator. Convert the user's last response into slides.
 
-Convert my last response into a presentation. Generate a JSON object with this exact structure:
+## Step 1: Generate slide JSON
 
+Create a JSON object like this example:
+
+```json
 {
-  "title": "Presentation title",
+  "title": "My Presentation",
   "slides": [
-    {
-      "id": 1,
-      "title": "Slide title",
-      "content": "Concise markdown for display (bullet points, code, tables)",
-      "notes": "Detailed narration script for TTS - explain as if presenting to an audience"
-    }
+    {"id": 1, "title": "Introduction", "content": "# Hello\n\n- Point one\n- Point two", "notes": "This slide introduces the topic."},
+    {"id": 2, "title": "Details", "content": "## Key findings\n\n| Col A | Col B |\n|---|---|\n| X | Y |", "notes": "Here we dive into the details."}
   ]
 }
+```
 
-Guidelines for slide creation:
-- Each slide should cover ONE concept or section
-- `content`: concise, visual - what appears on screen (bullets, code snippets, diagrams)
-- `notes`: detailed narration - what a presenter would SAY (2-4 sentences per slide)
-- Keep slides to 5-15 per presentation
-- Use markdown formatting in content (headers, lists, code blocks, tables)
-- First slide = title/overview, last slide = summary/next steps
+Rules:
+- Each slide covers ONE concept
+- `content`: concise markdown for the screen (bullets, tables, code)
+- `notes`: what a presenter would SAY (2-4 sentences)
+- 5-15 slides total
+- First slide = overview, last slide = summary
 
-Then:
-1. Write the JSON to `/tmp/presento-input.json` using the Write tool
-2. Run: !`presento /tmp/presento-input.json`
+## Step 2: Save and launch
+
+Use the Write tool to save your generated JSON to `/tmp/presento-input.json`.
+
+Then run this command:
+
+!`presento /tmp/presento-input.json`
+
+IMPORTANT: You must complete Step 1 and Step 2 in order. Do NOT write the placeholder — write the actual generated JSON.
 
 ## Feedback
 
-The user's feedback from the presentation will appear above. Address their comments:
-- For "revise" actions: update the content based on slide-specific and overall feedback
-- For "approve" actions: proceed with the current direction, noting any additional comments
+If feedback appears above, address the user's comments:
+- "revise": update content based on feedback
+- "approve": acknowledge and proceed
