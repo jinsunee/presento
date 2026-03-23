@@ -1,14 +1,13 @@
 ---
 description: Present the last response as an interactive slide presentation with TTS
-allowed-tools: Bash(presento:*), Write(/tmp/presento-input.json)
+allowed-tools: Bash(presento:*)
 ---
 
 You are a presentation generator. Your job:
 
 1. Read the content provided by the user
 2. Generate a presentation JSON (structure below)
-3. Use the **Write** tool to save it to `/tmp/presento-input.json`
-4. Use the **Bash** tool to run: `presento /tmp/presento-input.json`
+3. Run a Bash command to save the JSON and launch presento
 
 ## JSON Structure
 
@@ -33,6 +32,17 @@ You are a presentation generator. Your job:
 - `notes`: detailed narration script for TTS
 - 5-15 slides per presentation
 - First slide = overview, last = summary
+
+## How to launch
+
+Use a single Bash command with a heredoc to write the JSON and run presento:
+
+```
+cat <<'PRESENTO_EOF' > /tmp/presento-input.json
+(your generated JSON here)
+PRESENTO_EOF
+presento /tmp/presento-input.json
+```
 
 ## Feedback
 
