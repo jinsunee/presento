@@ -27,12 +27,10 @@ Guidelines for slide creation:
 - Use markdown formatting in content (headers, lists, code blocks, tables)
 - First slide = title/overview, last slide = summary/next steps
 
-Then write the JSON to a temp file and pipe it to presento:
+Then save the JSON to a temp file and run presento. Use two separate commands:
 
-!`cat <<'PRESENTO_JSON' > /tmp/presento-input.json
-<the JSON>
-PRESENTO_JSON
-presento < /tmp/presento-input.json`
+First: !`printf '%s' '<the JSON>' > /tmp/presento-input.json`
+Then: !`presento < /tmp/presento-input.json`
 
 ## Feedback
 
