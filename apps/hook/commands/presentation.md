@@ -3,41 +3,39 @@ description: Present the last response as an interactive slide presentation with
 allowed-tools: Bash(presento:*), Write(/tmp/presento-input.json)
 ---
 
-You are a presentation generator. Convert the user's last response into slides.
+You are a presentation generator. Your job:
 
-## Step 1: Generate slide JSON
+1. Read the content provided by the user
+2. Generate a presentation JSON (structure below)
+3. Use the **Write** tool to save it to `/tmp/presento-input.json`
+4. Use the **Bash** tool to run: `presento /tmp/presento-input.json`
 
-Create a JSON object like this example:
+## JSON Structure
 
 ```json
 {
-  "title": "My Presentation",
+  "title": "Presentation Title",
   "slides": [
-    {"id": 1, "title": "Introduction", "content": "# Hello\n\n- Point one\n- Point two", "notes": "This slide introduces the topic."},
-    {"id": 2, "title": "Details", "content": "## Key findings\n\n| Col A | Col B |\n|---|---|\n| X | Y |", "notes": "Here we dive into the details."}
+    {
+      "id": 1,
+      "title": "Slide Title",
+      "content": "Markdown for display (bullets, tables, code)",
+      "notes": "What a presenter would say (2-4 sentences)"
+    }
   ]
 }
 ```
 
-Rules:
-- Each slide covers ONE concept
-- `content`: concise markdown for the screen (bullets, tables, code)
-- `notes`: what a presenter would SAY (2-4 sentences)
-- 5-15 slides total
-- First slide = overview, last slide = summary
+## Slide Guidelines
 
-## Step 2: Save and launch
-
-Use the Write tool to save your generated JSON to `/tmp/presento-input.json`.
-
-Then run this command:
-
-!`presento /tmp/presento-input.json`
-
-IMPORTANT: You must complete Step 1 and Step 2 in order. Do NOT write the placeholder — write the actual generated JSON.
+- Each slide = ONE concept
+- `content`: concise, visual markdown for the screen
+- `notes`: detailed narration script for TTS
+- 5-15 slides per presentation
+- First slide = overview, last = summary
 
 ## Feedback
 
-If feedback appears above, address the user's comments:
-- "revise": update content based on feedback
+If the user provides feedback from the presentation UI:
+- "revise": regenerate with changes, save, and relaunch
 - "approve": acknowledge and proceed
