@@ -14,13 +14,13 @@ Turn Claude Code responses into interactive slide presentations with TTS narrati
 ### 1. Install binary
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/blueberryworks/presento/main/scripts/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/jinsunee/presento/main/scripts/install.sh | sh
 ```
 
 ### 2. Add to Claude Code
 
 ```
-/plugin marketplace add blueberryworks/presento
+/plugin marketplace add jinsunee/presento
 /plugin install presento@presento
 ```
 
@@ -29,10 +29,6 @@ curl -fsSL https://raw.githubusercontent.com/blueberryworks/presento/main/script
 ### /presentation
 
 Converts the last Claude response into a slide presentation with TTS.
-
-### /speak
-
-Reads the last response aloud using text-to-speech.
 
 ## TTS Options
 
