@@ -1,0 +1,73 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - target: bun-darwin-arm64
+            artifact: presento-darwin-arm64
+          - target: bun-darwin-x64
+            artifact: presento-darwin-x64
+          - target: bun-linux-x64
+            artifact: presento-linux-x64
+          - target: bun-linux-arm64
+            artifact: presento-linux-arm64
+          - target: bun-windows-x64
+            artifact: presento-win-x64.exe
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Build UI
+        run: bun run build
+
+      - name: Compile binary
+        run: |
+          bun build apps/hook/server/index.ts \
+            --compile \
+            --target=${{ matrix.target }} \
+            --outfile=${{ matrix.artifact }}
+
+      - name: Generate checksum
+        run: sha256sum ${{ matrix.artifact }} > ${{ matrix.artifact }}.sha256
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: |
+            ${{ matrix.artifact }}
+            ${{ matrix.artifact }}.sha256
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: |
+            artifacts/*
