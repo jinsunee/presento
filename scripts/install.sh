@@ -22,16 +22,17 @@ if [ -z "$LATEST" ]; then
   exit 1
 fi
 
-URL="https://github.com/${REPO}/releases/download/${LATEST}/${BINARY_NAME}-${PLATFORM}"
+ASSET_NAME="${BINARY_NAME}-${PLATFORM}"
+URL="https://github.com/${REPO}/releases/download/${LATEST}/${ASSET_NAME}"
 echo "Downloading ${URL}..."
-curl -fsSL -o "/tmp/${BINARY_NAME}" "$URL"
+curl -fsSL -o "/tmp/${ASSET_NAME}" "$URL"
 
 CHECKSUM_URL="${URL}.sha256"
-curl -fsSL -o "/tmp/${BINARY_NAME}.sha256" "$CHECKSUM_URL"
-cd /tmp && shasum -a 256 -c "${BINARY_NAME}.sha256"
+curl -fsSL -o "/tmp/${ASSET_NAME}.sha256" "$CHECKSUM_URL"
+cd /tmp && shasum -a 256 -c "${ASSET_NAME}.sha256"
 
 mkdir -p "$INSTALL_DIR"
-mv "/tmp/${BINARY_NAME}" "${INSTALL_DIR}/${BINARY_NAME}"
+mv "/tmp/${ASSET_NAME}" "${INSTALL_DIR}/${BINARY_NAME}"
 chmod +x "${INSTALL_DIR}/${BINARY_NAME}"
 
 echo "Installed to ${INSTALL_DIR}/${BINARY_NAME}"
