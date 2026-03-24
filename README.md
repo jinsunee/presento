@@ -30,6 +30,10 @@ curl -fsSL https://raw.githubusercontent.com/jinsunee/presento/main/scripts/inst
 
 Converts the last Claude response into a slide presentation with TTS.
 
+### /speak
+
+Reads the last Claude response aloud with TTS. Auto-plays on open.
+
 ## TTS Options
 
 | Engine | Setup | Quality |
