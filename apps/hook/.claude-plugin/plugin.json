@@ -6,5 +6,9 @@
     "name": "jinsunee"
   },
   "repository": "https://github.com/jinsunee/presento",
-  "keywords": ["presentation", "tts", "slides", "voice", "feedback"]
+  "keywords": ["presentation", "tts", "slides", "voice", "feedback"],
+  "commands": [
+    "./commands/presentation.md",
+    "./commands/speak.md"
+  ]
 }
