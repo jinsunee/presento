@@ -8,6 +8,7 @@ export interface Slide {
 export interface Presentation {
   title: string;
   slides: Slide[];
+  mode?: "presentation" | "speak";
 }
 
 export interface SlideComment {
@@ -33,6 +34,7 @@ export interface TTSSettings {
 export interface SlidesResponse {
   presentation: Presentation;
   origin: string;
+  config?: { openaiApiKey?: string };
 }
 
 export interface FeedbackResponse {

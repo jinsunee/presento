@@ -19,11 +19,16 @@ export default function App() {
     rate: 1.0,
   });
 
+  const [isSpeakMode, setIsSpeakMode] = useState(false);
+
   useEffect(() => {
     fetch("/api/slides")
       .then(r => r.json())
       .then(data => {
         setPresentation(data.presentation);
+        if (data.presentation?.mode === "speak") {
+          setIsSpeakMode(true);
+        }
         if (data.config?.openaiApiKey) {
           setTTSSettings(prev => ({
             ...prev,
@@ -39,6 +44,7 @@ export default function App() {
   }, []);
 
   const [tts] = useState(() => new TTSPlayer(ttsSettings));
+  const [autoPlayTriggered, setAutoPlayTriggered] = useState(false);
 
   const playSlide = useCallback((index: number) => {
     if (!presentation) return;
@@ -55,6 +61,16 @@ export default function App() {
       }
     });
   }, [presentation, tts]);
+
+  // Auto-play in speak mode
+  useEffect(() => {
+    if (isSpeakMode && presentation && !autoPlayTriggered) {
+      setAutoPlayTriggered(true);
+      // Small delay to let the UI render first
+      const timer = setTimeout(() => playSlide(0), 500);
+      return () => clearTimeout(timer);
+    }
+  }, [isSpeakMode, presentation, autoPlayTriggered, playSlide]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -92,7 +108,7 @@ export default function App() {
     <div className="flex flex-col h-screen bg-gray-950 text-white">
       <header className="flex items-center justify-between px-6 py-3 border-b border-gray-800">
         <div className="flex items-center gap-3">
-          <h1 className="text-lg font-semibold">Presento</h1>
+          <h1 className="text-lg font-semibold">{isSpeakMode ? "Presento Reader" : "Presento"}</h1>
           <span className="text-sm text-gray-500">{currentSlide + 1}/{presentation.slides.length}</span>
         </div>
         <div className="flex items-center gap-3">
