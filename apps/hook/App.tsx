@@ -22,7 +22,20 @@ export default function App() {
   useEffect(() => {
     fetch("/api/slides")
       .then(r => r.json())
-      .then(data => setPresentation(data.presentation));
+      .then(data => {
+        setPresentation(data.presentation);
+        if (data.config?.openaiApiKey) {
+          setTTSSettings(prev => ({
+            ...prev,
+            engine: "openai",
+            openaiApiKey: data.config.openaiApiKey,
+          }));
+          tts.updateSettings({
+            engine: "openai",
+            openaiApiKey: data.config.openaiApiKey,
+          });
+        }
+      });
   }, []);
 
   const [tts] = useState(() => new TTSPlayer(ttsSettings));

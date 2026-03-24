@@ -6,7 +6,7 @@
  *   echo '{}' | presento      — read from stdin
  */
 
-import { startPresentoServer, handleServerReady } from "@presento/server";
+import { startPresentoServer, handleServerReady, loadConfig } from "@presento/server";
 
 // @ts-ignore - Bun import attribute for text
 import html from "../dist/index.html" with { type: "text" };
@@ -36,10 +36,13 @@ try {
   process.exit(1);
 }
 
+const config = await loadConfig();
+
 const server = await startPresentoServer({
   presentation,
   origin: "claude-code",
   htmlContent,
+  config,
   onReady: (url) => handleServerReady(url),
 });
 

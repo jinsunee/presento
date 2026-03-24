@@ -135,7 +135,20 @@ export function TTSControls({
                 <input
                   type="password"
                   value={settings.openaiApiKey || ""}
-                  onChange={(e) => onSettingsChange({ openaiApiKey: e.target.value })}
+                  onChange={(e) => {
+                    const key = e.target.value;
+                    onSettingsChange({ openaiApiKey: key });
+                  }}
+                  onBlur={(e) => {
+                    const key = e.target.value;
+                    if (key) {
+                      fetch("/api/config", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ openaiApiKey: key }),
+                      });
+                    }
+                  }}
                   placeholder="sk-..."
                   className="w-full bg-gray-800 border border-gray-700 rounded px-2 py-1 text-sm"
                 />
