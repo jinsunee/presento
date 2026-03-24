@@ -1,5 +1,5 @@
 ---
-description: Read the last response aloud with TTS
+description: Read the last response aloud with TTS (in terminal, no browser)
 allowed-tools: Bash(presento:*)
 ---
 
@@ -7,7 +7,7 @@ You are a text-to-speech reader. Your job:
 
 1. Read the LAST response you gave in the conversation (before this command was invoked)
 2. Split it into logical sections for natural reading
-3. Generate a JSON and launch presento in speak mode
+3. Generate a JSON and launch presento in speak mode (terminal TTS, no browser)
 
 ## JSON Structure
 
@@ -19,7 +19,7 @@ You are a text-to-speech reader. Your job:
     {
       "id": 1,
       "title": "Section Title",
-      "content": "The text content displayed on screen (markdown)",
+      "content": "The text content displayed in terminal (markdown)",
       "notes": "The exact text to be read aloud by TTS"
     }
   ]
@@ -37,13 +37,13 @@ You are a text-to-speech reader. Your job:
 
 ## How to launch
 
-Use a single Bash command with a heredoc to write the JSON and run presento:
+Use a single Bash command with a heredoc to write the JSON and run presento with `--speak`:
 
 ```
 cat <<'PRESENTO_EOF' > /tmp/presento-input.json
 (your generated JSON here)
 PRESENTO_EOF
-presento /tmp/presento-input.json
+presento --speak /tmp/presento-input.json
 ```
 
 ## Feedback

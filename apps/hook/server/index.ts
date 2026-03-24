@@ -2,29 +2,33 @@
  * Presento CLI for Claude Code
  *
  * Usage:
- *   presento <path-to-json>   — read from file
- *   echo '{}' | presento      — read from stdin
+ *   presento <path-to-json>          — open presentation in browser
+ *   presento --speak <path-to-json>  — read aloud in terminal (no browser)
+ *   echo '{}' | presento             — read from stdin
+ *   echo '{}' | presento --speak     — read from stdin in terminal
  */
 
 import { startPresentoServer, handleServerReady, loadConfig } from "@presento/server";
+import { speakText } from "@presento/server/tts";
 
 // @ts-ignore - Bun import attribute for text
 import html from "../dist/index.html" with { type: "text" };
 const htmlContent = html as unknown as string;
 
 const args = process.argv.slice(2);
+const speakMode = args.includes("--speak");
+const filePath = args.find(a => a !== "--speak");
+
 let inputJson: string;
 
-if (args[0]) {
-  // File path provided as argument
-  const file = Bun.file(args[0]);
+if (filePath) {
+  const file = Bun.file(filePath);
   if (!(await file.exists())) {
-    console.error(`File not found: ${args[0]}`);
+    console.error(`File not found: ${filePath}`);
     process.exit(1);
   }
   inputJson = await file.text();
 } else {
-  // Read from stdin
   inputJson = await Bun.stdin.text();
 }
 
@@ -38,6 +42,25 @@ try {
 
 const config = await loadConfig();
 
+if (speakMode) {
+  // Terminal TTS mode — no browser
+  const slides = presentation.slides || [];
+  console.log(`\n📖 Reading: ${presentation.title}\n`);
+
+  for (let i = 0; i < slides.length; i++) {
+    const slide = slides[i];
+    console.log(`[${i + 1}/${slides.length}] ${slide.title}`);
+    console.log(slide.content);
+    console.log("");
+
+    await speakText({ text: slide.notes, config });
+  }
+
+  console.log("✅ Done reading.");
+  process.exit(0);
+}
+
+// Browser presentation mode
 const server = await startPresentoServer({
   presentation,
   origin: "claude-code",

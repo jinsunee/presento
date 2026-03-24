@@ -6,6 +6,7 @@
   "main": "index.ts",
   "exports": {
     ".": "./index.ts",
-    "./browser": "./browser.ts"
+    "./browser": "./browser.ts",
+    "./tts": "./tts.ts"
   }
 }

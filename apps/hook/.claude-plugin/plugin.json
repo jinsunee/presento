@@ -1,7 +1,7 @@
 {
   "name": "presento",
   "description": "Turn Claude Code responses into interactive slide presentations with TTS narration and feedback collection.",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "author": {
     "name": "jinsunee"
   },
